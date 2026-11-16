@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: docuextract
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/docuextract}
+    username: ${DB_USER:docuextract}
+    password: ${DB_PASSWORD:docuextract}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+docuextract:
+  storage:
+    directory: ${STORAGE_DIR:./data/uploads}
+  ocr:
+    binary: ${TESSERACT_BINARY:tesseract}
+    language: ${OCR_LANGUAGE:eng}
+    dpi: 300
+    max-pages: 20
+    min-text-chars: 20
+    timeout: 60s
+  ollama:
+    base-url: ${OLLAMA_URL:http://localhost:11434}
+    model: ${OLLAMA_MODEL:llama3.2}
+    timeout: 120s
+    max-input-chars: 12000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
